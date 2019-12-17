@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>X/Y Marks the Spot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<script type="text/javascript">
+//<![CDATA[
+
+function mouseDown(nsEvent) {
+	// 아래 한 줄이 바로 브라우저에 따라 다른 값이 대입되도록 하는 부분이다.
+	var theEvent = nsEvent ? nsEvent : window.event;
+	var locString = "X = " + theEvent.screenX + " Y = " + theEvent.screenY;
+	alert(locString);
+}
+
+document.onmousedown=mouseDown;
+//]]>
+</script>
+
+</head>
+<body>
+</body>
+</html>

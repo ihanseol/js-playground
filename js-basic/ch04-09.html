@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Random Quote</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<script type="text/javascript">
+//<![CDATA[
+
+var quoteArray = new Array(5);
+quoteArray[0] = "Quote one";
+quoteArray[1] = "Quote two";
+quoteArray[2] = "Quote three";
+quoteArray[3] = "Quote four";
+quoteArray[4] = "Quote five";
+
+function getQuote(  ) {
+   do {
+     iValue = Math.random(  ); // 0과 1사이의 랜덤 숫자를 생성한다.
+     alert(iValue);
+     iValue *= 10; // 1에서 10사이를 범위값을 얻기 위해 10을 곱한다.
+     alert(iValue);
+     iValue = Math.floor(iValue); // 소수점 이하자리는 반올림한다.
+     alert(iValue);
+     }
+   while (iValue > 4) 
+   alert(quoteArray[iValue]);
+}
+
+//]]>
+</script>
+</head>
+<body onload="getQuote(  );">
+</body>
+</html>

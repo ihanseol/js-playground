@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>FishEye on Dotty</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+
+<style type="text/css">
+
+.container { width: 800px;
+             margin: 0px auto;
+             border: 1px solid #00f;
+            }
+
+.content { padding: 30px }
+
+.dojoHtmlFisheyeListBar {
+        margin: 0 auto;
+        text-align: center;
+}
+
+.outerbar {
+        background-color: #CCD9FF;
+        text-align: center;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+}
+
+</style>
+
+<script type="text/javascript" src="dojo/dojo.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+
+        dojo.require("dojo.widget.FisheyeList");
+
+//]]>
+</script>
+</head>
+<body>
+<div class="container">
+<div class="outerbar">
+<div class="dojo-FisheyeList"
+        dojo:itemWidth="60" dojo:itemHeight="60"
+        dojo:itemMaxWidth="300" dojo:itemMaxHeight="300"
+        dojo:orientation="horizontal"
+        dojo:effectUnits="2"
+        dojo:itemPadding="10"
+        dojo:attachEdge="top"
+        dojo:labelEdge="bottom"
+        dojo:enableCrappySvgSupport="false"
+>
+
+        <div class="dojo-FisheyeListItem" onClick="load_app(1);"
+                dojo:iconsrc="dotty.gif" caption="Dotty">
+        </div>
+
+        <div class="dojo-FisheyeListItem" onClick="load_app(2);"
+                dojo:iconsrc="doomed.gif" caption="Doomed">
+        </div>
+
+        <div class="dojo-FisheyeListItem" onClick="load_app(3);"
+                dojo:iconsrc="falling.gif" caption="I'm falling">
+        </div>
+
+        <div class="dojo-FisheyeListItem" onClick="load_app(4);"
+                dojo:iconsrc="impatient.gif" caption="Impatient">
+        </div>
+
+        <div class="dojo-FisheyeListItem" onClick="load_app(5);"
+                dojo:iconsrc="upright.gif" caption="Upright">
+        </div>
+
+        <div class="dojo-FisheyeListItem" onClick="load_app(6);"
+                dojo:iconsrc="mad.gif" dojo:caption="Mad" >
+        </div>
+</div>
+</div>
+<div class="content">
+<p><pre>
+Forgive me, I'm no good at this. I can't write back. I never read your letter.
+
+I can't say I got your note. I haven't had the strength to open the envelope.
+
+The mail stacks up by the door. Your hand's illegible. Your postcards were
+
+defaced. Wash your wet hair? Any document you meant to send has yet to
+
+reach me. The untied parcel service never delivered. I regret to say I'm
+
+unable to reply to your unexpressed desires. I didn't get the book you sent.
+
+By the way, my computer was stolen. Now I'm unable to process words...
+
+Excerpt from <em>All She Wrote</em> by Harryette Mullen
+</pre></p>
+</div>
+</div>
+</body>
+</html>

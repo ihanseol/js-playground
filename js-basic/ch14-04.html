@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>PrettyPretty</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<style type="text/css">
+
+.roundme { width:250px;background-color:#0f0;margin: 20px; }
+.contents { padding: 10px }
+</style>
+<script type="text/javascript"
+     src="prototype.js">
+</script>
+<script type="text/javascript"
+     src="rico.js">
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+document.onclick=roundMe;
+ 
+ rounded = false;
+   function roundMe(  ) {
+      if ( !rounded ) {
+         Rico.Corner.round($('div'));                                     
+         Rico.Corner.round($('div2'), {border: '#ff0000'});
+         Rico.Corner.round($('div3'), {corners:"bottom"});
+      }
+      rounded = true;
+   }
+
+</script>
+</head>
+<body>
+<div class="roundme" id="div" >
+<div class="contents">
+A div element with rounded corners.
+</div>
+</div>
+<div id="div2" class="roundme">
+<div class="contents">
+Another div element with rounded corners.
+</div>
+</div>
+<div class="roundme" id="div3">
+<div class="contents">
+Another div
+</div>
+</div>
+</body>
+</html>

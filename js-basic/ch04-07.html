@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Regular Expression Switch</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+</head>
+<body>
+<script type="text/javascript">
+//<![CDATA[
+
+var rgExp = /(\w*)-*(\w*)/
+var str = "Java--Script";
+var resultStrng = str.replace(rgExp,"$2-$1");
+document.writeln(resultStrng);
+//]]>
+</script>
+</body>
+</html>

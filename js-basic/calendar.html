@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Javascript Calendar</title>
+<script type="text/javascript">
+//<![CDATA[
+
+var monthArray=new Array('1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월');
+var endDayN=new Array(31,28,31,30,31,30,31,31,30,31,30,31); // 월별 일수 (평년)
+var endDayL=new Array(31,29,31,30,31,30,31,31,30,31,30,31); // 월별 일수 (윤년)
+
+// 클라이언트 시스템의 오늘 날짜를 저장하는 Date 객체
+var now = new Date();
+
+// 캘린더에 표시할 날짜
+var curDate;
+var curMonth;
+var curYear;
+
+// 클라이언트 시스템의 오늘 날짜
+var toDate;
+var toMonth;
+var toYear;
+
+// 텍스트 필드에 입력한 날짜
+var selDate; 
+var selMonth;
+var selYear;
+
+// 이벤트리스너 설정
+if (window.addEventListener) {
+	window.addEventListener("load",setupEvents,false);
+	} else if (window.attachEvent) {
+		window.attachEvent("onload", setupEvents);
+	} else {
+		window.onload=setupEvents;
+}
+
+// 페이지 로드시 특정 엘리먼트에 이벤트 핸들러 추가
+function setupEvents(evnt) {
+	window.document.inputForm.whichdate.onclick = function() { Init(1); }
+}
+
+// 주어진 ID에 대한 엘리먼트 참조 반환 함수
+function getObj(objID) {
+    if (document.getElementById) {return document.getElementById(objID);}
+    else if (document.all) {return document.all[objID];}
+    else if (document.layers) {return document.layers[objID];}
+}
+
+// 이벤트 호환성 검사 함수
+function whichEvent(evnt) {
+	var theEvent = evnt ? evnt : window.event;
+	var target = theEvent.target ? theEvent.target : theEvent.srcElement;
+	return target;
+}
+
+// 오늘 날짜 표시
+function Init(flag) 
+{
+	if (flag == 0) 
+	{
+		//창 크기 변경
+		self.resizeTo(200,350);
+		// 오늘 날짜에 대한 처리
+		Today();
+		Calendar(curYear, curMonth, curDate);
+	} else if (flag == 1) {
+		var result = GetDate();
+		if( result == true )
+			Calendar(curYear, curMonth, curDate);
+	} else {
+	 //예외!
+	}
+}
+
+function Today() {
+	// 전역변수 curDate, curMonth, curYear를 오늘 날짜로 초기화
+	// toDate는 오늘 날짜 | curDate는 캘린더에 표시할 날짜
+	toDate = curDate = now.getDate();
+	toMonth = curMonth = now.getMonth()+1;
+	toYear = curYear = now.getFullYear();
+}
+
+function GetDate(evnt)
+{
+	var dateString = window.document.inputForm.inputDate.value;
+	try
+	{
+		result = CheckInputDate(dateString);
+	}
+	catch (e)
+	{
+		alert(e);
+		return false;
+	}
+	selYear = curYear = result[1];
+	selMonth = curMonth = result[2];
+	selDate = curDate = result[3];
+	return true;
+}
+
+// 입력 날짜 검사
+function CheckInputDate(value) {
+	// 아랫것이 최종인데. 임시로 그 밑에것 사용 9999년까지
+	var rgEx = /\s?(\d?\d?\d?\d)[- /.]?(0?[1-9]|1[012])[- /.]?(0[1-9]|[12][0-9]|3[01])\s?/;
+
+	var result = rgEx.exec(value);
+
+	if (!result)
+		throw "입력된 날짜가 잘못되었습니다.";
+	else
+		return result;
+}
+
+function Calendar(curYear_, curMonth_, curDate_) 
+{
+//	var year = parseInt(curYear_, 10);   // calendar 함수 호출시 넘겨준 값이 실제는 문자열값이다.
+//	var month = parseInt(curMonth_, 10); // 이렇게 받은 값을 가급적 parseInt로
+//	var date = parseInt(curDate_, 10);   // 숫자값으로 들어가도록 확실히 해주는 것이 좋다.
+
+	var year = curYear_;   // calendar 함수 호출시 넘겨준 값이 실제는 문자열값이다.
+	var month = curMonth_; // 이렇게 받은 값을 가급적 parseInt로
+	var date = curDate_;   // 숫자값으로 들어가도록 확실히 해주는 것이 좋다.
+	// 각 달의 첫째날의 요일을 알기 위한 메커니즘
+	var firstDay=new Date();
+	firstDay.setDate(1);
+	firstDay.setMonth(month-1);
+	firstDay.setFullYear(year);
+
+	var whatDay=firstDay.getDay(); // getDay는 요일을 숫자로 반환 -> 즉 일요일=0부터 토요일=6
+	var endDay =( (year%4)==0 && (year%100)!=0 || (year%400)==0 )? endDayL : endDayN; // 윤년 여부에 따라 날짜수 결정
+	getObj("idMonth").innerHTML=monthArray[month-1]; // 지정한 달을 표시 (캘린더 윗부분)
+	getObj("idYear").innerHTML=year + "년"; // 지정한 년도를 표시 (캘린더 윗부분)
+
+	for(var i=1;i<=42;i++) {
+		if( (i >= (whatDay+1)) && (i <= (endDay[month-1]+whatDay)) ) {
+			if( (i-whatDay) == toDate && month == toMonth && year == toYear ) {
+				// 오늘 날짜 항목 스타일 변경 (하이라이트)
+				obj = getObj('v'+i);
+				obj.style.background='#FFF799';
+				obj.style.font='bold 14px Arial';
+				obj.style.color='#333333';
+				obj.style.textAlign='center';
+				obj.style.cursor='pointer';
+			} else if( (i-whatDay) == selDate && month == selMonth && year == selYear ) {
+				obj = getObj('v'+i);
+				obj.style.background='#C0C0C0';
+				obj.style.font='bold 14px Arial';
+				obj.style.color='#333333';
+				obj.style.textAlign='center';
+				obj.style.cursor='pointer';
+			} else {
+				obj = getObj('v'+i);
+				obj.style.background='#FFFFFF';
+				obj.style.font='bold 14px Arial';
+				obj.style.color='BLACK';
+				obj.style.textAlign='center';
+				obj.style.cursor='pointer';
+
+				getObj('v'+i).onmouseover=MouseOver;
+				getObj('v'+i).onmouseout=MouseOut;
+			}
+
+			getObj('v'+i).onclick=MouseClick;
+			// 캘린더에 날짜 표시
+			getObj('v'+i).innerHTML=i-whatDay;
+		}
+		else {
+			getObj('v'+parseInt(i)).innerHTML='&nbsp;';
+		}
+	}
+}
+
+// 마우스가 날짜 위에 있을 때 색상 배경변경 => 현재 파란색
+function MouseOver(evnt)
+{
+	var target = whichEvent(evnt);
+	target.style.backgroundColor="#10FFFF";
+}
+
+// 마우스가 날짜 위에서 벗어났을 때 배경색상 변경 => 흰색
+function MouseOut(evnt) {
+	var target = whichEvent(evnt);
+	target.style.backgroundColor="#FFFFFF"; // 흰색
+}
+
+// 클릭했을 때 - @@여기에 추가해도 됨..
+function MouseClick(evnt) {
+	var target = whichEvent(evnt);
+	target.style.backgroundColor="#CCAA00";
+}
+
+// 한달 감소
+function DecMonth() {
+	curMonth--;
+	if( curMonth < 1 )
+	{
+		curMonth = 12;
+		curYear--;
+	}
+	curDate = GetValidDay(curYear, curMonth, curDate);
+	Calendar(curYear, curMonth, curDate);
+}
+
+// 한달 증가
+function IncMonth()
+{
+	curMonth++;
+	if( curMonth > 12 ) {
+		curMonth = 1;
+		curYear++;
+	}
+	curDate = GetValidDay(curYear, curMonth, curDate);
+	Calendar(curYear, curMonth, curDate);
+}
+
+// 한해 감소
+function DecYear() {
+	curYear--;
+	curDate = GetValidDay(curYear, curMonth, curDate);
+	Calendar(curYear, curMonth, curDate);
+}
+
+// 한해 증가
+function IncYear() {
+	curYear++;
+	curDate = GetValidDay(curYear, curMonth, curDate);
+	Calendar(curYear, curMonth, curDate);
+}
+
+// 년/월이 변경되었을 때 일이 마지막 날짜보다 클 경우 조정
+function GetValidDay(year, month, date)
+{
+	// 윤년 여부
+	var isLunar = ((curYear%4)==0 && (curYear%100)!=0 || (curYear%400)==0);
+	// 윤년 여부에 따른 마지막 날짜 배열 선택
+	var endDay = (isLunar)? endDayL : endDayN;
+	 // 마지막 날짜 조정
+	if( date > endDay[curMonth-1] )
+		date = endDay[curMonth-1];
+	return date;
+}
+
+//]]>
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+</head>
+<body onload="Init(0);">
+
+<table style="font:bold 14px Verdana" cellpadding="4px">
+	<tr>
+		<td id="cal">
+			<!- 캘린더 들어가는 곳 ->
+			<!- 일단 static으로 잡아줘야 IE에서 문제가 생기지 않는다. -> 
+			<table style="border: 1px solid rgb(200, 200, 200); background: rgb(255, 255, 255) none repeat scroll 0%; position: static; border-collapse: collapse; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" cellpadding="1"><tbody>
+			<tr><td colspan=7> 
+			<table style="border: 0px; background: rgb(255, 255, 255) none repeat scroll 0%; position: static; border-collapse: collapse; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" cellpadding="0">
+			<tr><td>
+			<img src="arrow_left.gif" onclick="DecMonth()" /></td>
+			<td id="idMonth" style="font-family: Arial; font-style: normal; font-variant: normal; font-weight: bold; font-size: 12px; line-height: normal; font-size-adjust: none; font-stretch: normal;" align="center">&nbsp;</td><td><img src="arrow_right.gif" onclick="IncMonth()" /></td>
+			<td><img src="arrow_left.gif" onclick="DecYear()" /></td>
+			<td colspan="2" id="idYear" style="font-family: Arial; font-style: normal; font-variant: normal; font-weight: bold; font-size: 12px; line-height: normal; font-size-adjust: none; font-stretch: normal;" align="center">&nbsp;</td>
+			<td>
+			<img src="arrow_right.gif" onclick="IncYear()" />
+			</td></tr></table>
+
+			</td>
+			</tr><tr><td style="background: rgb(171, 171, 171); font-family: Arial; font-style: normal; font-weight: normal; font-size: 12px;" align="center">일</td>
+			<td style="background: rgb(171, 171, 171); font-family: Arial; font-style: normal; font-weight: normal; font-size: 12px;" align="center">월</td><td style="background: rgb(171, 171, 171); font-family: Arial; font-style: normal; font-weight: normal; font-size: 12px;" align="center">화</td><td style="background: rgb(171, 171, 171); font-family: Arial; font-style: normal; font-weight: normal; font-size: 12px;" align="center">수</td><td style="background: rgb(171, 171, 171); font-family: Arial; font-style: normal; font-weight: normal; font-size: 12px;" align="center">목</td><td style="background: rgb(171, 171, 171); font-family: Arial; font-style: normal; font-weight: normal; font-size: 12px;" align="center">금</td><td style="background: rgb(171, 171, 171); font-family: Arial; font-style: normal; font-weight: normal; font-size: 12px;" align="center">토</td></tr><tr><td id="v1">v1&nbsp;</td><td id="v2">v2&nbsp;</td><td id="v3">v3&nbsp;</td><td id="v4">v4&nbsp;</td><td id="v5">v5&nbsp;</td><td id="v6">v6&nbsp;</td><td id="v7">v7&nbsp;</td></tr><tr><td id="v8">v8&nbsp;</td><td id="v9">v9&nbsp;</td><td id="v10">v10&nbsp;</td><td id="v11">v11&nbsp;</td><td id="v12">v12&nbsp;</td><td id="v13">v13&nbsp;</td><td id="v14">v14&nbsp;</td></tr><tr><td id="v15">v15&nbsp;</td><td id="v16">v16&nbsp;</td><td id="v17">v17&nbsp;</td><td id="v18">v18&nbsp;</td><td id="v19">v19&nbsp;</td><td id="v20">v20&nbsp;</td><td id="v21">v21&nbsp;</td></tr><tr><td id="v22">v22&nbsp;</td><td id="v23">v23&nbsp;</td><td id="v24">v24&nbsp;</td><td id="v25">v25&nbsp;</td><td id="v26">v26&nbsp;</td><td id="v27">v27&nbsp;</td><td id="v28">v28&nbsp;</td></tr><tr><td id="v29">v29&nbsp;</td><td id="v30">v30&nbsp;</td><td id="v31">v31&nbsp;</td><td id="v32">v32&nbsp;</td><td id="v33">v33&nbsp;</td><td id="v34">v34&nbsp;</td><td id="v35">v35&nbsp;</td></tr><tr><td id="v36">v36&nbsp;</td><td id="v37">v37&nbsp;</td><td id="v38">v38&nbsp;</td><td id="v39">v39&nbsp;</td><td id="v40">v40&nbsp;</td><td id="v41">v41&nbsp;</td><td id="v42">v42&nbsp;</td></tr> </tbody></table>
+		<form name="inputForm" action="">
+			<input type="text" name="inputDate" value="yyyy mm dd" size="9">
+			<input id="whichdate" type="button" value="로 이동"">
+		</form>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<td>
+	</tr>
+</table>
+
+</body>
+</html>

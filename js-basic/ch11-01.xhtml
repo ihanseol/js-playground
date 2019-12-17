@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/2002/REC-xhtml1-20020801/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Adding trim function to String</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript">
+//<![CDATA[
+
+
+// For this document to be served as XHTML, the XHTML namespace is added to the html tag. 
+// In addition, the document.write was removed, the script moved to the header, and the 
+// DOM was used to write out the text. A universal event handler was used to attach 
+// the event handler function to the window.load event.
+
+// add event listening
+function manageEvent(eventObj, event, eventHandler) {
+   if (eventObj.addEventListener) {
+      eventObj.addEventListener(event, eventHandler,false);
+   } else if (eventObj.attachEvent) {
+      event = "on" + event;
+      eventObj.attachEvent(event, eventHandler);
+   }
+}
+
+manageEvent(window,'load',setUp);
+
+function setUp() {
+
+   String.prototype.trim = function() {
+     return (this.replace(/^[\s\xA0]+/, "").replace(/[\s\xA0]+$/, ""));
+   }
+
+   var sObj = new String("  This is the string   ");
+   sTxt = sObj.trim();
+
+   var newPara = document.createElement('p');
+   var newText = document.createTextNode("--" + sTxt + "--");
+   newPara.appendChild(newText);
+   document.body.appendChild(newPara);
+}
+
+//]]>
+</script>
+</head>
+<body>
+</body>
+</html>

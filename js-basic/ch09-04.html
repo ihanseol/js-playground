@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Timers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<script type="text/javascript">
+//<![CDATA[
+
+var ct = 0;
+var imgs = new Array("impatient.gif","doomed.gif","upright.gif");
+setTimeout("progress(  )",3000);
+
+function progress(  ) {
+
+   if (ct < 3) {
+      document.images[0].src=imgs[ct];
+      ct++;
+      setTimeout("progress(  )" ,3000);
+   }
+}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Frames</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+</head>
+<frameset cols="300,*">
+<frame name="framea" src="framea.htm" />
+<frame name="frameb" src="frameb.htm" />
+</frameset>
+</html>
+
+//]]>
+</script>
+</head>
+<body>
+<img src="mad.gif" />
+</body>
+</html>

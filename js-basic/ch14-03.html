@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>I want to have fun!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<script type="text/javascript" src="prototype.js"></script>
+<script type="text/javascript" src="scriptaculous.js"></script>
+
+<style type="text/css">
+div.elem { margin: 20px; padding: 10px;
+           background-color: #C6B3FF;
+           width: 400px; height: 200px;
+          }
+
+.elem a { text-decoration: none; font-size: larger; color: #6A38FF }
+</style>
+
+<script type="text/javascript">
+//<![CDATA[
+
+function pulsate(  ) {
+   new Effect.Pulsate($('theblock'));
+}
+function shake(  ) {
+   new Effect.Shake($('theblock'));
+}
+
+function slideup(  ) {
+   new Effect.SlideUp($('theblock'));
+}
+
+function slidedown(  ) {
+   new Effect.SlideDown($('theblock'));
+}
+
+function dropout(  ) {
+   new Effect.DropOut($('theblock'));
+}
+
+function appear(  ) {
+   new Effect.Appear($('theblock'));
+}
+function puff(  ) {
+   new Effect.Puff($('theblock'));
+}
+function squish(  ) {
+   new Effect.Squish($('theblock'));
+}
+function highlight(  ) {
+   new Effect.Highlight($('theblock'));
+}
+//]]>
+</script>
+
+</head>
+<body>
+
+<div id="theblock" class="elem">
+<p>Testing the scriptaculous effects</p>
+</div>
+<div class="elem">
+<a href="javascript:pulsate(  )">new Effect.Pulsate(obj)</a><br />
+<a href="javascript:shake(  )">new Effect.Shake(obj)</a><br />
+<a href="javascript:slideup(  )">new Effect.SlideUp(obj)</a><br />
+<a href="javascript:slidedown(  )">new Effect.SlideDown(obj)</a><br />
+<a href="javascript:dropout(  )">new Effect.DropOut(obj)</a><br />
+<a href="javascript:appear(  )">new Effect.Appear(obj)</a><br />
+<a href="javascript:puff(  )">new Effect.Puff(obj)</a><br />
+<a href="javascript:squish(  )">new Effect.Squish(obj)</a><br />
+<a href="javascript:highlight(  )">new Effect.Highlight(obj)</a>
+</div>
+</body>
+</html>

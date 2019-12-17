@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>$</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<script type="text/javascript" src="prototype.js">
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+function iterate(  ) {
+  var lower = new Number($F('input1'));
+  var higher = new Number($F('input2'));
+
+  var rng = $R(lower,higher,false);
+  var div = $('div1');
+  var strng = "";
+  rng.each(function(value,index) {
+             strng+=value + " ";
+             });
+  div.innerHTML = "<p>" + strng + "</p>";
+}
+//]]>
+</script>
+
+</head>
+<body>
+<form id="form1">
+lower: <input type="text" id="input1" /><br />
+upper: <input type="text" id="input2" /><br />
+<a href="javascript:iterate(  )">Iterate</a>
+</form>
+<div id="div1">
+</div>
+</body>
+</html>

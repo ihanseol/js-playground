@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Hello Prototype Ajax World</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<script type="text/javascript" src="prototype.js">
+</script>
+<style type="text/css">
+div.elem { margin: 20px; }
+</style>
+
+<script type="text/javascript">
+//<![CDATA[
+
+function populateList(  ) {
+   var url = 'ajaxprototype.php';
+   var params = "state=" + escape($F('state'));
+   var ajx = new Ajax.Updater('cities',url,{method: 'get', parameters: params, onFailure : handleError});
+}
+
+function handleError(request,hdr) {
+   alert(hdr);
+}
+
+//]]>
+</script>
+
+</head>
+<body>
+
+<h3>Select State:</h3>
+<form action="ajax.php" method="get">
+<div class="elem">
+<select onchange="populateList(  )" id="state">
+<option value="CA">California</option>
+<option value="MO">Missouri</option>
+<option value="WA">Washington</option>
+<option value="ID">Idaho</option>
+</select>
+</div>
+<h3>Cities:</h3>
+<div id="cities" class="elem">
+<select>
+</select>
+</div>
+</form>
+
+</body>
+</html>
